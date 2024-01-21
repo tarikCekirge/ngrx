@@ -1,5 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { CounterService } from '../../../service/counter.service';
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+// import { IncrementAction, } from '../../../store/counter.actions';
+import { decrement, increment } from '../../../store/counter.actions';
 
 @Component({
   selector: 'app-controls',
@@ -9,14 +11,14 @@ import { CounterService } from '../../../service/counter.service';
   styleUrl: './controls.component.scss'
 })
 export class ControlsComponent {
-  counterService = inject(CounterService)
-
+  constructor(private store: Store) { }
   decrement() {
-    this.counterService.decrement()
+    this.store.dispatch(decrement({ value: 1 }))
   }
 
   increment() {
-    this.counterService.increment()
+    this.store.dispatch(increment({ value: 3 }))
+    // this.store.dispatch(new IncrementAction(1))
 
   }
 

@@ -1,29 +1,24 @@
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { CounterService } from '../../../service/counter.service';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-output',
   standalone: true,
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './output.component.html',
   styleUrl: './output.component.scss'
 })
-export class OutputComponent implements OnInit, OnDestroy {
+export class OutputComponent {
+  count$: Observable<number>;
 
-  counterService = inject(CounterService)
-  counter = signal<number>(0);
-  counterServiceSub?: Subscription;
+  constructor(private store: Store<{ counter: number }>) {
+    this.count$ = store.select('counter')
+  }
 
-  ngOnInit() {
-    this.counterServiceSub = this.counterService.counterChanged.subscribe(
-      newVal => this.counter.set(newVal)
-    )
-  }
-  ngOnDestroy() {
-    if (this.counterServiceSub) {
-      this.counterServiceSub.unsubscribe();
-    }
-  }
+
+
+
 
 }
