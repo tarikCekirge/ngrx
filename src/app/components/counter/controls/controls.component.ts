@@ -17,7 +17,7 @@ export class ControlsComponent {
   }
 
   increment() {
-    this.store.dispatch(increment({ value: 3 }))
+    this.store.dispatch(increment({ value: 1 }))
     // this.store.dispatch(new IncrementAction(1))
 
   }
